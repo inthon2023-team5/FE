@@ -2,7 +2,7 @@ import { alpha, createTheme, lighten, darken } from '@mui/material'
 import '@mui/lab/themeAugmentation'
 
 const themeColors = {
-  primary: '#FFA500', // Orange
+  primary: '#3498db', // Prettier Blue
   secondary: '#333333', // Dark Gray
   success: '#00FF00', // Lime
   warning: '#FF4500', // Orange-Red
@@ -10,7 +10,9 @@ const themeColors = {
   info: '#FFA07A', // Light Salmon
   black: '#333333', // Dark Gray
   white: '#FFFFFF', // White
-  primaryAlt: '#FF6347' // Tomato (Dark Reddish-Orange)
+  primaryAlt: '#FF6347', // Tomato (Dark Reddish-Orange)
+  purplish: '#800080', // Purple
+  bluish: '#4682B4' // Steel Blue
 }
 
 const colors = {

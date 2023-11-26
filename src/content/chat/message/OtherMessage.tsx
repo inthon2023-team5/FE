@@ -1,11 +1,10 @@
-import { Box, Typography, Card, styled, Avatar } from '@mui/material'
-import { formatDistance } from 'date-fns'
+import { Box, Typography, Card, styled, Avatar, CircularProgress } from '@mui/material'
 import { formatChatTime } from 'src/utils/formatChatTime'
 import stringToHexColor from 'src/utils/stringToColor'
 
 interface MyMessageProps {
   message: string
-  sentAt: string
+  sentAt?: string
   nickname: string
 }
 
@@ -14,10 +13,19 @@ const OtherMessage = ({ message, sentAt, nickname }: MyMessageProps) => {
     <Box display="flex" alignItems="flex-start" justifyContent="flex-start" py={3}>
       <Avatar sx={{ bgColor: stringToHexColor(nickname) }}>{nickname[0]}</Avatar>
       <Box display="flex" alignItems="flex-base" justifyContent="flex-start" ml={2}>
-        <CardWrapperSecondary sx={{ mb: 1 }}>{message}</CardWrapperSecondary>
-        <Typography variant="subtitle1" sx={{ ml: 1, pt: 1, display: 'flex', alignItems: 'center' }}>
-          {formatChatTime(sentAt)}
-        </Typography>
+        <CardWrapperSecondary sx={{ mb: 1 }}>
+          <Box display={'block'}>
+            <Box display={'flex'} justifyContent={'center'}>
+              {!sentAt && <CircularProgress />}
+            </Box>
+            <Typography>{message}</Typography>
+          </Box>
+        </CardWrapperSecondary>
+        {sentAt && (
+          <Typography variant="subtitle1" sx={{ ml: 1, pt: 1, display: 'flex', alignItems: 'center' }}>
+            {formatChatTime(sentAt)}
+          </Typography>
+        )}
       </Box>
     </Box>
   )

@@ -13,30 +13,39 @@ import { getQuestionChat } from 'src/api/chat'
 import { useAuthHeader } from 'react-auth-kit'
 import { ChatHistory, Profile } from 'src/models/chat'
 import { enqueueSnackbar } from 'notistack'
-import { Category } from 'src/data/category'
 
 const ChatScreen = () => {
   const { category } = useParams()
   const qaId = Number(category)
   const token = useAuthHeader()()
-  const navigate = useNavigate()
   const [chatDetails, setChatDetails] = useState<ChatHistory[]>([])
   const [profile, setProfile] = useState<Profile | null>(null)
   const [isQuestionUser, setIsQuestionUser] = useState(false)
-  // if (!token) {
-  //   navigate('auth/login')
-  //   return null
-  // }
+  const [isRefresh, setIsRefresh] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [chatState, setChatState] = useState<number>(0)
+  const navigate = useNavigate()
+
+  if (!token) {
+    enqueueSnackbar('로그인이 필요한 서비스입니다.', { variant: 'error' })
+    navigate('/')
+    return null
+  }
+  const handleRefresh = () => {
+    setIsRefresh(!isRefresh)
+  }
 
   const handleFetchChatDetails = async () => {
     try {
+      setIsLoading(true)
       const res = await getQuestionChat(token, qaId)
-      console.log(res)
       setChatDetails(res.chats)
       if (res.profile) {
         setProfile(res.profile)
       }
       setIsQuestionUser(res.isQuestionUser)
+      setIsLoading(false)
+      setChatState(res.state)
     } catch (error) {
       enqueueSnackbar('채팅 내역을 불러오는데 실패했어요. 나중에 다시 시도해 주세요', { variant: 'error' })
     }
@@ -45,7 +54,7 @@ const ChatScreen = () => {
   useEffect(() => {
     if (!qaId) return
     handleFetchChatDetails()
-  }, [qaId])
+  }, [qaId, isRefresh])
 
   return (
     <>
@@ -57,23 +66,30 @@ const ChatScreen = () => {
           {!!qaId && (
             <ChatTopBar sx={{ display: { xs: 'flex', lg: 'inline-block' } }}>
               <ChatHeader
+                isQuestionUser={isQuestionUser}
+                chatState={chatState}
                 profile={profile}
                 qaId={qaId}
                 createdAt={chatDetails?.length !== 0 ? chatDetails[0].createdAt : ''}
+                handleRefresh={handleRefresh}
               />
             </ChatTopBar>
           )}
           <Box flex={1}>
             <Scrollbar>
               <ChatContent
+                chatState={chatState}
                 isQuestionUser={isQuestionUser}
                 nickname={profile?.nickname ?? 'BOT'}
                 chatDetails={chatDetails}
+                isLoading={isLoading}
               />
             </Scrollbar>
           </Box>
           <Divider />
-          <ChatInput isQuestionUser={isQuestionUser} />
+          {(chatState === 0 || chatState === 2) && (
+            <ChatInput isQuestionUser={isQuestionUser} handleRefresh={handleRefresh} />
+          )}
         </ChatWindow>
       </RootWrapper>
     </>
@@ -107,3 +123,6 @@ const ChatTopBar = styled(Box)(
         align-items: center;
 `
 )
+function postQuestionStart(token: string, qaId: number) {
+  throw new Error('Function not implemented.')
+}

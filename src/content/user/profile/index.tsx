@@ -27,8 +27,8 @@ const UserProfile = () => {
     try {
       const res = await getUserQuestionHistory(token)
 
-      setQuestionHistoryAnswer(res.questions.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)))
-      setQuestionHistoryQuestion(res.answers.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)))
+      setQuestionHistoryAnswer(res.answers.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)))
+      setQuestionHistoryQuestion(res.questions.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)))
     } catch (err) {
       enqueueSnackbar('질문 내역을 불러오는데 실패했습니다.', { variant: 'error' })
     }

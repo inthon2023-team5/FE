@@ -1,5 +1,5 @@
-import { Box, Button, Card, CardContent, Link, Typography } from '@mui/material'
-import { useNavigate, useNavigationType } from 'react-router'
+import { Box, Card, CardContent, Typography } from '@mui/material'
+import { useNavigate } from 'react-router'
 import { QuestionPreview } from 'src/models/question'
 
 interface QuestionBoxProps {

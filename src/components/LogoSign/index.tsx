@@ -1,4 +1,4 @@
-import { Box, Tooltip, Badge, TooltipProps, tooltipClasses, styled, useTheme } from '@mui/material'
+import { Box, Tooltip, Badge, TooltipProps, tooltipClasses, styled, useTheme, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 const LogoWrapper = styled(Link)(
@@ -91,18 +91,7 @@ const Logo = () => {
   return (
     <TooltipWrapper title="Go Home" arrow>
       <LogoWrapper to="/">
-        <Badge
-          sx={{
-            '.MuiBadge-badge': {
-              fontSize: theme.typography.pxToRem(11),
-              right: -2,
-              top: 8
-            }
-          }}
-          overlap="circular"
-          color="success"
-          badgeContent="2.0"
-        >
+        <Badge>
           <LogoSignWrapper>
             <LogoSign>
               <LogoSignInner />

@@ -1,5 +1,5 @@
 import { Box, List, ListItem, ListItemText } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 
 const HeaderMenu = () => {
@@ -14,16 +14,16 @@ const HeaderMenu = () => {
         }}
       >
         <List disablePadding component={Box} display="flex">
-          <ListItem classes={{ root: 'MuiListItem-indicators' }} component={NavLink} to="/">
+          <ListItem classes={{ root: 'MuiListItem-indicators' }} component={RouterLink} to="/">
             <ListItemText primaryTypographyProps={{ noWrap: true }} primary="전체" />
           </ListItem>
-          <ListItem classes={{ root: 'MuiListItem-indicators' }} component={NavLink} to="/school">
+          <ListItem classes={{ root: 'MuiListItem-indicators' }} component={RouterLink} to="/school">
             <ListItemText primaryTypographyProps={{ noWrap: true }} primary="학교생활" />
           </ListItem>
-          <ListItem classes={{ root: 'MuiListItem-indicators' }} component={NavLink} to="/future">
+          <ListItem classes={{ root: 'MuiListItem-indicators' }} component={RouterLink} to="/future">
             <ListItemText primaryTypographyProps={{ noWrap: true }} primary="진로" />
           </ListItem>
-          <ListItem classes={{ root: 'MuiListItem-indicators' }} component={NavLink} to="/course">
+          <ListItem classes={{ root: 'MuiListItem-indicators' }} component={RouterLink} to="/course">
             <ListItemText primaryTypographyProps={{ noWrap: true }} primary="과목" />
           </ListItem>
         </List>

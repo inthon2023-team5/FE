@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router'
 import { postQuestionChat } from 'src/api/chat'
 import { ChatInfo } from 'src/models/chat'
 
-const ChatInput = ({ isQuestionUser }: { isQuestionUser: boolean }) => {
+const ChatInput = ({ isQuestionUser, handleRefresh }: { isQuestionUser: boolean; handleRefresh: () => void }) => {
   const theme = useTheme()
   const user = useAuthUser()()
   const token = useAuthHeader()()
@@ -53,6 +53,7 @@ const ChatInput = ({ isQuestionUser }: { isQuestionUser: boolean }) => {
         ...chatInfo,
         chat: ''
       })
+      handleRefresh()
     } catch (error) {
       enqueueSnackbar('채팅이 전송되지 않았어요. 나중에 다시 시도해 주세요', { variant: 'error' })
     }
@@ -63,6 +64,7 @@ const ChatInput = ({ isQuestionUser }: { isQuestionUser: boolean }) => {
       const res = await postQuestionNew(token, questionInfo)
       enqueueSnackbar('채팅방이 생성되었어요!', { variant: 'success' })
       navigate(`/chat/${res.id}`)
+      handleRefresh()
     } catch (error) {
       enqueueSnackbar('서버에서 에러가 생겼어요. 나중에 다시 시도해 주세요', { variant: 'error' })
     }
@@ -71,7 +73,7 @@ const ChatInput = ({ isQuestionUser }: { isQuestionUser: boolean }) => {
   return (
     <Box sx={{ background: theme.colors.alpha.white[50], display: 'flex', alignItems: 'center', p: 2 }}>
       <Box flexGrow={1} display="flex" alignItems="center">
-        <Avatar sx={{ bgcolor: stringToHexColor(user.nickname) }}>{user.nickname[0]}</Avatar>
+        {user && <Avatar sx={{ bgcolor: stringToHexColor(user.nickname) }}>{user.nickname[0]}</Avatar>}{' '}
         <MessageInputWrapper
           autoFocus
           placeholder="질문을 입력해주세요"

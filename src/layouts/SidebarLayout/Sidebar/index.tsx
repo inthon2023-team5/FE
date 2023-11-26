@@ -49,8 +49,9 @@ const Sidebar = () => {
         }}
       >
         <Box mt={3}>
-          <Box mx={2} sx={{ width: 52 }}>
+          <Box mx={2} sx={{ width: 52, display: 'flex' }}>
             <Logo />
+            <Typography variant={'h6'}>Univ Link</Typography>
           </Box>
         </Box>
         {user ? (

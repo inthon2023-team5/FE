@@ -27,4 +27,5 @@ export interface ChatState {
   profile: Profile
   isQuestionUser: boolean
   chats: ChatHistory[]
+  state: number
 }
